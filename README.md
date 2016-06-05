@@ -2,7 +2,7 @@
 
 ## Installation
 
-You can install this package via [packagist.org](https://packagist.org/packages/systream/feature-switch) with [composer](https://getcomposer.org/).
+You can install this package via [packagist.org](https://packagist.org/packages/systream/state-machine) with [composer](https://getcomposer.org/).
 
 `composer require systream/state-machine`
 
@@ -13,8 +13,6 @@ composer.json:
     "systream/state-machine": "1.*"
 }
 ```
-
-This library requires `php 5.6` or higher, but also works on php 5.4.
 
 ## Usage examples
 
