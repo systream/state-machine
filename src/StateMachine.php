@@ -2,7 +2,6 @@
 
 namespace Systream;
 
-
 use Systream\EventDispatcher\Subscription;
 use Systream\StateMachine\Exception\CantSetStatusException;
 use Systream\StateMachine\State\StateInterface;
@@ -73,7 +72,7 @@ class StateMachine
 			throw new CantSetStatusException(sprintf('There is no transaction like "%s" to "%s"', $model->getState()->getName(), $targetStatus->getName()));
 		}
 
-		$event = new TransitionEvent($model, $targetStatus);
+		$event = new TransitionEvent($model, $targetStatus, $this->getEventKey($model->getState(), $targetStatus));
 		$this->eventDispatcher->emit($event);
 		$model->setState($targetStatus);
 	}

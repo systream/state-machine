@@ -23,22 +23,13 @@ class TransitionEvent extends AbstractEvent
 	 * TransitionEvent constructor.
 	 * @param StateObjectInterface $model
 	 * @param StateInterface $targetState
+	 * @param string $key
 	 */
-	public function __construct(StateObjectInterface $model, StateInterface $targetState)
+	public function __construct(StateObjectInterface $model, StateInterface $targetState, $key)
 	{
 		$this->model = $model;
 		$this->targetState = $targetState;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getKey()
-	{
-		if (!$this->key) {
-			$this->key = $this->model->getState()->getId() . '|' . $this->targetState->getId();
-		}
-		return $this->key;
+		$this->key = $key;
 	}
 
 	/**
