@@ -61,20 +61,19 @@ So you need to implement it, or just use ```\Systream\StateMachine\State\StateOb
 
 #### Can
 
-Set project state to $inStock and process it to Ordered.
+Testing, whether it can change the status to the target state
 
 ```php
 $product = new DummyStateObject();
 $product->setState($inStock);
 $stateMachine->can($product, $ordered); // will return true
-
-$stateMachine->process($product, $deliveredToClient); // will return false
+$stateMachine->can($product, $deliveredToClient); // will return false
 
 ```
 
 #### Process
 
-Set project state to $inStock and process it to Ordered.
+Set project state to ```In Stock``` and process it to ```Ordered```.
 
 ```php
 $product = new DummyStateObject();
@@ -92,7 +91,7 @@ $stateMachine->process($product, $deliveredToClient);
 
 ```
 
-### Get State Machine states
+### Get states
 
 ```php
 $states = $stateMachine->getStates();
