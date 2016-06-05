@@ -1,0 +1,27 @@
+{
+  "name": "systream/state-machine",
+  "description": "State machine",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "keywords": ["state", "machine", "state-machine", "transaction", "statemachine"],
+  "authors": [
+    {
+      "name": "Peter Tihanyi",
+      "email": "tihi@systream.hu"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Systream\\": "src/",
+      "Tests\\Systream\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=5.4.0",
+    "systream/event-dispatcher": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.3",
+    "phpmd/phpmd": "2.*"
+  }
+}
