@@ -298,13 +298,78 @@ class StateMachineTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * @tests
+	 * @param StateMachine\State $initialState
+	 * @param StateMachine\State $expectedState
+	 * @dataProvider GenericTransition_dateProvider
+	 */
+	public function GenericTransition(StateMachine\State $initialState, StateMachine\State $expectedState)
+	{
+		$sm = $this->getStateMachine();
+		$inStock = new StateMachine\State('In stock');
+		$ordered = new StateMachine\State('Ordered');
+		$completed = new StateMachine\State('Order completed');
+
+		$sm->addTransition(
+			new StateMachine\Transition\GenericTransition('Order on website'),
+			$inStock,
+			$ordered
+		);
+
+		$sm->addTransition(
+			new StateMachine\Transition\GenericTransition('Deliver to client'),
+			$ordered,
+			$completed
+		);
+
+		$sm->addTransition(
+			new StateMachine\Transition\GenericTransition('Cancel order'),
+			$ordered,
+			$inStock
+		);
+
+		$sm->addTransition(
+			new StateMachine\Transition\GenericTransition('Cancel order'),
+			$completed,
+			$inStock
+		);
+
+		$product = new DummyStateObject();
+		$product->setState($initialState);
+
+		$sm->process($product, $expectedState);
+
+		$this->assertEquals(
+			$expectedState, $product->getState()
+		);
+	}
+
+
+	/**
+	 * @return array
+	 */
+	public function GenericTransition_dateProvider()
+	{
+		$inStock = new StateMachine\State('In stock');
+		$ordered = new StateMachine\State('Ordered');
+		$completed = new StateMachine\State('Order completed');
+
+		return array(
+			array($inStock, $ordered),
+			array($ordered, $completed),
+			array($ordered, $inStock),
+			array($completed, $inStock),
+		);
+	}
+
+	/**
 	 * @param string $name
 	 * @param \PHPUnit_Framework_MockObject_Matcher_Invocation $processTransactionState
-	 * @return \PHPUnit_Framework_MockObject_MockObject|StateMachine\TransitionInterface
+	 * @return \PHPUnit_Framework_MockObject_MockObject|StateMachine\Transition\TransitionInterface
 	 */
 	protected function getTransitionMock($name = '', \PHPUnit_Framework_MockObject_Matcher_Invocation $processTransactionState = null)
 	{
-		$transition = $this->getMockBuilder(StateMachine\TransitionInterface::class)
+		$transition = $this->getMockBuilder(StateMachine\Transition\TransitionInterface::class)
 			->getMock();
 		if ($name) {
 			$transition

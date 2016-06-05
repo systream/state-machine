@@ -1,6 +1,6 @@
 <?php
 
-namespace Systream\StateMachine;
+namespace Systream\StateMachine\Transition;
 
 
 use Systream\EventDispatcher\AbstractEvent;

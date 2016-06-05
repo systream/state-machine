@@ -7,8 +7,8 @@ use Systream\EventDispatcher\Subscription;
 use Systream\StateMachine\Exception\CantSetStatusException;
 use Systream\StateMachine\State\StateInterface;
 use Systream\StateMachine\State\StateObjectInterface;
-use Systream\StateMachine\TransitionEvent;
-use Systream\StateMachine\TransitionInterface;
+use Systream\StateMachine\Transition\TransitionEvent;
+use Systream\StateMachine\Transition\TransitionInterface;
 
 class StateMachine
 {
