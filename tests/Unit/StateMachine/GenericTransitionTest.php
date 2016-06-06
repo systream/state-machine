@@ -6,7 +6,6 @@ namespace Tests\Systream\Unit\StateMachine;
 use Systream\StateMachine\State;
 use Systream\StateMachine\State\StateObjectInterface;
 use Systream\StateMachine\Transition\GenericTransition;
-use Tests\Systream\Unit\DummyStateObject;
 
 class GenericTransitionTest extends \PHPUnit_Framework_TestCase
 {

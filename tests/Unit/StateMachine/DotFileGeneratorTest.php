@@ -18,7 +18,8 @@ class DotFileGeneratorTest extends \PHPUnit_Framework_TestCase
 	{
 		$doFileGenerator = new StateMachine\DotFileGenerator();
 		$image = $doFileGenerator->getImage($stateMachine);
-		$this->imageToASCII($image);
+		//$this->imageToASCII($image);
+
 	}
 
 	/**
