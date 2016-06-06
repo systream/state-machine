@@ -4,6 +4,7 @@ namespace Tests\Systream\Unit\StateMachine;
 
 
 use Systream\StateMachine\State;
+use Systream\StateMachine\State\StateObjectInterface;
 use Systream\StateMachine\Transition\GenericTransition;
 use Tests\Systream\Unit\DummyStateObject;
 
@@ -26,7 +27,7 @@ class GenericTransitionTest extends \PHPUnit_Framework_TestCase
 	{
 		$transition = new GenericTransition('foo');
 
-		$stateObjectInterface = $this->getMockBuilder(State\StateObjectInterface::class)->getMock();
+		$stateObjectInterface = $this->getMockBuilder(StateObjectInterface::class)->getMock();
 
 		$stateObjectInterface->expects($this->atLeastOnce())->method('setState');
 		$foo = new State('foo');

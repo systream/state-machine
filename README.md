@@ -91,12 +91,23 @@ $stateMachine->process($product, $deliveredToClient);
 
 ```
 
-### Get states
+### Get available states
 
 ```php
 $states = $stateMachine->getStates();
 
 ```
+It will return array of ```\Systream\StateMachine\State\StateInterface``` objects
+
+#### Get next states
+
+This method will return of the next possible states of an state object:
+```php
+$product = new DummyStateObject();
+$states = $stateMachine->getNextStates($product);
+
+```
+
 It will return array of ```\Systream\StateMachine\State\StateInterface``` objects
 
 

@@ -28,6 +28,11 @@ class StateMachine
 	protected $transitionStates = array();
 
 	/**
+	 * @var TransitionInterface[]
+	 */
+	protected $transitions;
+
+	/**
 	 * StateMachine constructor.
 	 * @param EventDispatcher $eventDispatcher
 	 */
@@ -45,6 +50,8 @@ class StateMachine
 	{
 		$this->addState($sourceState);
 		$this->addState($targetState);
+
+		$this->transitions[] = $transition;
 
 		if (!isset($this->transitionStates[$sourceState->getId()])) {
 			$this->transitionStates[$sourceState->getId()] = array();
@@ -90,7 +97,7 @@ class StateMachine
 	}
 
 	/**
-	 * @return StateInterface
+	 * @return StateInterface[]
 	 */
 	public function getStates()
 	{
@@ -120,7 +127,7 @@ class StateMachine
 
 	/**
 	 * @param StateObjectInterface $model
-	 * @return array
+	 * @return StateInterface[]
 	 */
 	public function getNextStates(StateObjectInterface $model)
 	{
@@ -133,6 +140,5 @@ class StateMachine
 		}
 		return $result;
 	}
-
 
 }
