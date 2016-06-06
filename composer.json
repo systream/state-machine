@@ -3,7 +3,7 @@
   "description": "State machine",
   "minimum-stability": "dev",
   "license": "MIT",
-  "keywords": ["state", "machine", "state-machine", "transaction", "statemachine"],
+  "keywords": ["state", "machine", "state-machine", "transition", "statemachine"],
   "authors": [
     {
       "name": "Peter Tihanyi",
