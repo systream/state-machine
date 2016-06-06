@@ -10,5 +10,4 @@ use Systream\StateMachine\State\StateObjectTrait;
 class DummyStateObject implements StateObjectInterface
 {
 	use StateObjectTrait;
-
 }
