@@ -120,6 +120,7 @@ $image = $doFileGenerator->getImage($stateMachine);
 file_put_contents('my_flow_chart.png', $image);
 
 ```
+[[https://github.com/systream/state-machine/blob/master/assets/my_flow_chart.png|alt=example-flow]]
 
 ## Test
 
