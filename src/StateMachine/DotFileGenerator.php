@@ -46,10 +46,13 @@ class DotFileGenerator
 			$object->setState($state);
 			$nextStates = $stateMachine->getNextStates($object);
 			foreach ($nextStates as $nextState) {
+
+				$transitionName = $stateMachine->getTransitionName($state, $nextState);
+
 				$return .= $this->getNodeIndex($state->getName()) .
 					' -> ' .
 					$this->getNodeIndex($nextState->getName()) .
-					//' [label="'.$state->getName().'"]' .
+					' [label="' . $transitionName . '"]' .
 					";\r\n";
 			}
 		}

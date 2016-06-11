@@ -366,4 +366,19 @@ class StateMachineTest extends AbstractStateMachineTest
 			array($completed, $inStock),
 		);
 	}
+
+	/**
+	 * @tests
+	 */
+	public function getTransitionName()
+	{
+		$inStock = new StateMachine\State('In stock');
+		$ordered = new StateMachine\State('Ordered');
+
+		$sm = $this->getStateMachine();
+
+		$sm->addTransition(new StateMachine\Transition\GenericTransition('fooBar2'), $inStock, $ordered);
+		$this->assertEquals('fooBar2', $sm->getTransitionName($inStock, $ordered));
+
+	}
 }

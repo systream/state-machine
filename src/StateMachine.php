@@ -30,7 +30,12 @@ class StateMachine
 	/**
 	 * @var TransitionInterface[]
 	 */
-	protected $transitions;
+	protected $transitions = array();
+
+	/**
+	 * @var array
+	 */
+	protected $transitionsStates = array();
 
 	/**
 	 * StateMachine constructor.
@@ -58,6 +63,7 @@ class StateMachine
 		}
 
 		$this->transitionStatesFlow[$sourceState->getId()][] = $targetState->getId();
+		$this->transitionsStates[$transition->getName()] = array($sourceState->getId(), $targetState->getId());
 
 		$transitionSubscription = new Subscription(
 			$this->getEventKey($sourceState, $targetState),
@@ -139,6 +145,21 @@ class StateMachine
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * @param StateInterface $sourceState
+	 * @param StateInterface $targetState
+	 * @return int|string
+	 */
+	public function getTransitionName(StateInterface $sourceState, StateInterface $targetState)
+	{
+		foreach ($this->transitionsStates as $transitionsStateName => $states) {
+			if ($sourceState->getId() == $states[0] && $targetState->getId() == $states[1]) {
+				return $transitionsStateName;
+			}
+		}
+		return '';
 	}
 
 }
