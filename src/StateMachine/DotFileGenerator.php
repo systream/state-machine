@@ -18,28 +18,65 @@ class DotFileGenerator
 	);
 
 	/**
+	 * @var array
+	 */
+	protected $nodeLabels;
+
+	/**
+	 * @var string
+	 */
+	protected $nodeIndex;
+
+	/**
 	 * @param StateMachine $stateMachine
 	 * @return string
 	 */
 	public function generateDotFileData(StateMachine $stateMachine)
 	{
-		$return = 'digraph {
-			rankdir=LR;';
+		$this->nodeLabels = array();
+		$this->nodeIndex = 'a';
+
+		$return = "digraph {
+			\r\n";
 
 		$states = $stateMachine->getStates();
 		$object = new DummyStateObject();
-		
+
 		foreach ($states as $state) {
 			$object->setState($state);
 			$nextStates = $stateMachine->getNextStates($object);
 			foreach ($nextStates as $nextState) {
-				$return .= $state->getName() .  ' -> ' . $nextState->getName() . ';';
+				$return .= $this->getNodeIndex($state->getName()) .
+					' -> ' .
+					$this->getNodeIndex($nextState->getName()) .
+					' [label="'.$state->getName().'"]' . ";\r\n";
 			}
 		}
 
+		$return .= "\r\n";
+		foreach ($this->nodeLabels as $nodeIndex => $nodeLabel) {
+			$return .= '"' . $nodeIndex . '" [label="' . $nodeLabel . '"]' . "\r\n";
+		}
+
+		$return .= "\r\n";
 		$return .= '}';
 
 		return $return;
+	}
+
+	/**
+	 * @param string $nodeLabel
+	 * @return string
+	 */
+	protected function getNodeIndex($nodeLabel)
+	{
+		$nodeIndex = array_search($nodeLabel, $this->nodeLabels);
+		if ($nodeIndex === false) {
+			$this->nodeIndex++;
+			$nodeIndex = $this->nodeIndex;
+			$this->nodeLabels[$nodeIndex] = $nodeLabel;
+		}
+		return $nodeIndex;
 	}
 
 	/**

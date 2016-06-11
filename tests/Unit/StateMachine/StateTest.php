@@ -11,7 +11,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @tests
 	 */
-	public function idFromName_samq()
+	public function idFromName_same()
 	{
 		$state = new State('foo');
 		$state2 = new State('foo');

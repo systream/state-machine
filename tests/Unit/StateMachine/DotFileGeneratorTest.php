@@ -5,10 +5,23 @@ namespace Tests\Systream\Unit\StateMachine;
 
 use Systream\EventDispatcher;
 use Systream\StateMachine;
+use Tests\Systream\Unit\AbstractStateMachineTest;
 
-class DotFileGeneratorTest extends \PHPUnit_Framework_TestCase
+class DotFileGeneratorTest extends AbstractStateMachineTest
 {
 
+	/**
+	 * @return void
+	 */
+	protected function cleanTmpDirectory()
+	{
+		$fileDir = $this->getTmpDir();
+		$files = glob( $fileDir . '*');
+		foreach($files as $file) {
+			if(is_file($file))
+				unlink($file);
+		}
+	}
 	/**
 	 * @test
 	 * @param StateMachine $stateMachine
@@ -18,8 +31,9 @@ class DotFileGeneratorTest extends \PHPUnit_Framework_TestCase
 	{
 		$doFileGenerator = new StateMachine\DotFileGenerator();
 		$image = $doFileGenerator->getImage($stateMachine);
-		//$this->imageToASCII($image);
-
+		$this->assertNotEmpty($image);
+		$this->cleanTmpDirectory();
+		file_put_contents($this->getTmpDir() . 'image.png', $image);
 	}
 
 	/**
@@ -31,8 +45,15 @@ class DotFileGeneratorTest extends \PHPUnit_Framework_TestCase
 		$sm->addTransition(new StateMachine\Transition\GenericTransition('foo'), new StateMachine\State('test'), new StateMachine\State('test2'));
 		$sm->addTransition(new StateMachine\Transition\GenericTransition('foo2'), new StateMachine\State('test2'), new StateMachine\State('test'));
 
+		$sm2 = new StateMachine(new EventDispatcher());
+		$sm2->addTransition(new StateMachine\Transition\GenericTransition('foo'), new StateMachine\State('test'), new StateMachine\State('test2'));
+		$sm2->addTransition(new StateMachine\Transition\GenericTransition('foo2'), new StateMachine\State('test2'), new StateMachine\State('test3'));
+		$sm2->addTransition(new StateMachine\Transition\GenericTransition('foo2'), new StateMachine\State('test'), new StateMachine\State('test3'));
+
 		return array(
-			array($sm)
+			array($sm),
+			array($sm),
+			array($this->initOrderStateMachine())
 		);
 	}
 
@@ -62,5 +83,14 @@ class DotFileGeneratorTest extends \PHPUnit_Framework_TestCase
 			}
 			echo PHP_EOL;
 		}
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getTmpDir()
+	{
+		$fileDir = realpath(__DIR__ . '/../../tmp/');
+		return $fileDir . '/';
 	}
 }

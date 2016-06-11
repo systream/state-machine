@@ -110,6 +110,16 @@ $states = $stateMachine->getNextStates($product);
 
 It will return array of ```\Systream\StateMachine\State\StateInterface``` objects
 
+# Visualization
+With this library you are able to generate an image with the states and transitions.
+To get this work you need to install ```graphviz```.
+
+```php
+$doFileGenerator = new StateMachine\DotFileGenerator();
+$image = $doFileGenerator->getImage($stateMachine);
+file_put_contents('my_flow_chart.png', $image);
+
+```
 
 ## Test
 
