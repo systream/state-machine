@@ -55,13 +55,17 @@ abstract class AbstractStateMachineTest extends \PHPUnit_Framework_TestCase
 		$orderStatuses = $this->getOrderStates();
 
 		$orderTransition = $this->getTransitionMock('Order', $processTransactionState);
-		$backOrderTransition = $this->getTransitionMock('Back Order', $processTransactionState);
+		$backOrderTransition = $this->getTransitionMock('Backorder', $processTransactionState);
 		$addToCourierTransition = $this->getTransitionMock('Add to courier', $processTransactionState);
 		$handoverToClientTransition = $this->getTransitionMock('Package delivered to client', $processTransactionState);
 		$clientSendBackTransition = $this->getTransitionMock('Client send back to shop.', $processTransactionState);
 
 		$stateMachine->addTransition(
 			$orderTransition, $orderStatuses['inStock'], $orderStatuses['ordered']
+		);
+
+		$stateMachine->addTransition(
+			$orderTransition, $orderStatuses['notInStock'], $orderStatuses['ordered']
 		);
 
 		$stateMachine->addTransition(
@@ -94,10 +98,11 @@ abstract class AbstractStateMachineTest extends \PHPUnit_Framework_TestCase
 	{
 		return array(
 			'inStock' => new StateMachine\State('In stock'),
-			'backOrder' => new StateMachine\State('Back ordered'),
+			'backOrder' => new StateMachine\State('Backordered'),
 			'ordered' => new StateMachine\State('Ordered'),
 			'shippingInProcess' => new StateMachine\State('Shipping in process'),
 			'deliveredToClient' => new StateMachine\State('Order is at client'),
+			'notInStock' => new StateMachine\State('Not in stock'),
 		);
 	}
 }

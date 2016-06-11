@@ -25,7 +25,7 @@ class StateMachine
 	/**
 	 * @var array
 	 */
-	protected $transitionStates = array();
+	protected $transitionStatesFlow = array();
 
 	/**
 	 * @var TransitionInterface[]
@@ -53,11 +53,11 @@ class StateMachine
 
 		$this->transitions[] = $transition;
 
-		if (!isset($this->transitionStates[$sourceState->getId()])) {
-			$this->transitionStates[$sourceState->getId()] = array();
+		if (!isset($this->transitionStatesFlow[$sourceState->getId()])) {
+			$this->transitionStatesFlow[$sourceState->getId()] = array();
 		}
 
-		$this->transitionStates[$sourceState->getId()][] = $targetState->getId();
+		$this->transitionStatesFlow[$sourceState->getId()][] = $targetState->getId();
 
 		$transitionSubscription = new Subscription(
 			$this->getEventKey($sourceState, $targetState),
@@ -92,8 +92,8 @@ class StateMachine
 	public function can(StateObjectInterface $model, StateInterface $targetStatus)
 	{
 		$modelStateId = $model->getState()->getId();
-		return isset($this->transitionStates[$modelStateId]) &&
-			in_array($targetStatus->getId(), $this->transitionStates[$modelStateId]);
+		return isset($this->transitionStatesFlow[$modelStateId]) &&
+			in_array($targetStatus->getId(), $this->transitionStatesFlow[$modelStateId]);
 	}
 
 	/**
@@ -133,8 +133,8 @@ class StateMachine
 	{
 		$result = array();
 		$modelStateId = $model->getState()->getId();
-		if (isset($this->transitionStates[$modelStateId])) {
-			foreach ($this->transitionStates[$modelStateId] as $transitionStateId) {
+		if (isset($this->transitionStatesFlow[$modelStateId])) {
+			foreach ($this->transitionStatesFlow[$modelStateId] as $transitionStateId) {
 				$result[] = $this->states[$transitionStateId];
 			}
 		}

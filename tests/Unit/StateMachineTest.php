@@ -166,7 +166,7 @@ class StateMachineTest extends AbstractStateMachineTest
 		$stateMachine = $this->initOrderStateMachine($this->atLeastOnce());
 
 		$product = new DummyStateObject();
-		$product->setState($statuses['inStock']);
+		$product->setState($statuses['notInStock']);
 
 		$stateMachine->process($product, $statuses['ordered']);
 		$stateMachine->process($product, $statuses['backOrder']);
@@ -243,6 +243,11 @@ class StateMachineTest extends AbstractStateMachineTest
 			array($statuses['inStock'], $statuses['shippingInProcess']),
 			array($statuses['inStock'], $statuses['deliveredToClient']),
 			array($statuses['inStock'], $statuses['inStock']),
+
+			array($statuses['notInStock'], $statuses['backOrder']),
+			array($statuses['notInStock'], $statuses['shippingInProcess']),
+			array($statuses['notInStock'], $statuses['deliveredToClient']),
+			array($statuses['notInStock'], $statuses['inStock']),
 			
 			array($statuses['ordered'], $statuses['inStock']),
 			array($statuses['ordered'], $statuses['deliveredToClient']),

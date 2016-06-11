@@ -49,7 +49,8 @@ class DotFileGenerator
 				$return .= $this->getNodeIndex($state->getName()) .
 					' -> ' .
 					$this->getNodeIndex($nextState->getName()) .
-					' [label="'.$state->getName().'"]' . ";\r\n";
+					//' [label="'.$state->getName().'"]' .
+					";\r\n";
 			}
 		}
 
