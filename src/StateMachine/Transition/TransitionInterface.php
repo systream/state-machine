@@ -8,7 +8,10 @@ use Systream\StateMachine\State\StateObjectInterface;
 
 interface TransitionInterface
 {
-	
+
+	/**
+	 * @return string
+	 */
 	public function getName();
 	
 	/**

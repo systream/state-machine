@@ -9,7 +9,7 @@ trait StateObjectTrait
 	/**
 	 * @var StateInterface
 	 */
-	protected $state;
+	private $state;
 
 	/**
 	 * @param StateInterface $state

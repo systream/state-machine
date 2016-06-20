@@ -82,7 +82,7 @@ class StateMachine
 	public function process(StateObjectInterface $model, StateInterface $targetStatus)
 	{
 		if (!$this->can($model, $targetStatus)) {
-			throw new CantSetStatusException(sprintf('There is no transaction like "%s" to "%s"', $model->getState()->getName(), $targetStatus->getName()));
+			throw new CantSetStatusException(sprintf('There is no transition from "%s" to "%s"', $model->getState()->getName(), $targetStatus->getName()));
 		}
 
 		$event = new TransitionEvent($model, $targetStatus, $this->getEventKey($model->getState(), $targetStatus));
@@ -150,7 +150,7 @@ class StateMachine
 	/**
 	 * @param StateInterface $sourceState
 	 * @param StateInterface $targetState
-	 * @return int|string
+	 * @return string
 	 */
 	public function getTransitionName(StateInterface $sourceState, StateInterface $targetState)
 	{
